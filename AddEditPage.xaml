@@ -10,7 +10,7 @@
 
     <Grid>
 
-        <TextBlock Text="Hello!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+        <TextBlock Text="Список агентов" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
 
     </Grid>
 </Page>

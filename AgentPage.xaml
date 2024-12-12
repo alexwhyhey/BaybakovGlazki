@@ -12,9 +12,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBox Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged" Width="250" Margin="5"/>
             <ComboBox Name="CBoxSorting" SelectionChanged="CBoxSorting_SelectionChanged" Width="250" Margin="5">
                 <TextBlock>Сортировка</TextBlock>
@@ -83,5 +84,19 @@
 
 
 
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock Name="TBCount" FontSize="20" Height="25"/>
+            <TextBlock Name="TBAllRecords" FontSize="20" Height="25"/>
+
+            <Button Name="LeftDirButton" Content="&lt;" Width="20" Height="20" FontSize="10" Click="LeftDirButton_Click"></Button>
+            <ListBox FontSize="15" Name="PageListBox" MouseUp="PageListBox_MouseUp">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <Button Name="RightDirButton" Content="&gt;" Width="20" Height="20" FontSize="10" Click="RightDirButton_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

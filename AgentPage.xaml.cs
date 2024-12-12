@@ -28,19 +28,47 @@ namespace Baybakov_Glazki
             var currentAgentsType = BaybakovGlazkiSaveEntities.GetContext().AgentType.ToList();
 
             AgentListView.ItemsSource = currentAgents;
-            CBoxType.ItemsSource = currentAgentsType;
+            CBoxType.SelectedIndex = 0;
+            CBoxSorting.SelectedIndex = 0;
         }
 
         private void UpdateAgent()
         {
             var currentAgents = BaybakovGlazkiSaveEntities.GetContext().Agent.ToList();
-            var currentAgentsType = BaybakovGlazkiSaveEntities.GetContext().AgentType.ToList();
 
-            currentAgents = currentAgents.Where(p => (Convert.ToInt32(p.AgentTypeID) == CBoxType.SelectedIndex+1)).ToList();
-
-            switch(CBoxSorting.SelectedIndex)
+            if (CBoxType.SelectedIndex != 0)
             {
-                case 0: break;
+                currentAgents = currentAgents.Where(p => (Convert.ToInt32(p.AgentTypeID) == CBoxType.SelectedIndex)).ToList(); 
+            }
+
+            switch (CBoxSorting.SelectedIndex)
+            {
+                case 0: 
+                    break;
+                case 1:
+                    currentAgents = currentAgents.OrderBy(p => p.Title).ToList();
+                    break;
+                case 2:
+                    currentAgents = currentAgents.OrderByDescending(p => p.Title).ToList();
+                    break;
+                case 3:
+                    //currentAgents = currentAgents.OrderBy(p => p.Discount).ToList();
+                    break;
+                case 4:
+                    //currentAgents = currentAgents.OrderByDescending(p => p.Discount).ToList();
+                    break;
+                case 5:
+                    currentAgents = currentAgents.OrderBy(p => p.Priority).ToList();
+                    break;
+                case 6:
+                    currentAgents = currentAgents.OrderByDescending(p => p.Priority).ToList();
+                    break;
+            }
+
+            if (!string.IsNullOrWhiteSpace(TBoxSearch.Text)) {
+                currentAgents = currentAgents.Where(p => p.Title.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList().
+                    Union(currentAgents.Where(p => p.Email.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList()).ToList().
+                    Union(currentAgents.Where(p => p.Phone.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList()).ToList();
             }
 
             AgentListView.ItemsSource = currentAgents;
@@ -53,12 +81,12 @@ namespace Baybakov_Glazki
 
         private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            UpdateAgent();
         }
 
         private void CBoxSorting_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            UpdateAgent();
         }
 
         private void CBoxType_SelectionChanged(object sender, SelectionChangedEventArgs e)

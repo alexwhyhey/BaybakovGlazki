@@ -15,14 +15,24 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <TextBox Text="Поиск" Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged" Width="250" Margin="5"/>
-            <ComboBox Name="CBoxSorting" SelectionChanged="CBoxSorting_SelectionChanged" Width="250" Margin="5"></ComboBox>
+            <TextBox Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged" Width="250" Margin="5"/>
+            <ComboBox Name="CBoxSorting" SelectionChanged="CBoxSorting_SelectionChanged" Width="250" Margin="5">
+                <TextBlock>Сортировка</TextBlock>
+                <TextBlock>Наименование по возрастанию</TextBlock>
+                <TextBlock>Наименование по убыванию</TextBlock>
+                <TextBlock>Скидка по возрастанию</TextBlock>
+                <TextBlock>Скидка по убыванию</TextBlock>
+                <TextBlock>Приоритет по возрастанию</TextBlock>
+                <TextBlock>Приоритет по убыванию</TextBlock>
+            </ComboBox>
             <ComboBox Name="CBoxType" Text="Типы" SelectionChanged="CBoxType_SelectionChanged" Width="250" Margin="5">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Title}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
+                <TextBlock>Все типы</TextBlock>
+                <TextBlock>ЗАО</TextBlock>
+                <TextBlock>МКК</TextBlock>
+                <TextBlock>МФО</TextBlock>
+                <TextBlock>ОАО</TextBlock>
+                <TextBlock>ООО</TextBlock>
+                <TextBlock>ПАО</TextBlock>
             </ComboBox>
         </StackPanel>
         

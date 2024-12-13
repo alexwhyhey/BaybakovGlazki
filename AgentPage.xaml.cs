@@ -203,5 +203,10 @@ namespace Baybakov_Glazki
         {
             ChangePage(0, Convert.ToInt32(PageListBox.SelectedItem.ToString()) - 1);
         }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

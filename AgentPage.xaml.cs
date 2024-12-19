@@ -144,10 +144,10 @@ namespace Baybakov_Glazki
                     currentAgents = currentAgents.OrderByDescending(p => p.Title).ToList();
                     break;
                 case 3:
-                    //currentAgents = currentAgents.OrderBy(p => p.Discount).ToList();
+                    currentAgents = currentAgents.OrderBy(p => p.Discount).ToList();
                     break;
                 case 4:
-                    //currentAgents = currentAgents.OrderByDescending(p => p.Discount).ToList();
+                    currentAgents = currentAgents.OrderByDescending(p => p.Discount).ToList();
                     break;
                 case 5:
                     currentAgents = currentAgents.OrderBy(p => p.Priority).ToList();
@@ -212,6 +212,22 @@ namespace Baybakov_Glazki
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new AddEditPage(null));
+        }
+
+        private void AgentListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (AgentListView.SelectedItems.Count > 1)
+            {
+                ChangePriorityBtn.Visibility= Visibility.Visible;
+            } else
+            {
+                ChangePriorityBtn.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void ChangePriorityBtn_Click(object sender, RoutedEventArgs e)
+        {
+             
         }
     }
 }

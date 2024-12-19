@@ -24,6 +24,19 @@ namespace Baybakov_Glazki
     
         public int ID { get; set; }
         public int AgentTypeID { get; set; }
+        public string AgentCharacterTypeID
+        {
+            get
+            {
+                var Ch = BaybakovGlazkiSaveEntities.GetContext().AgentType.Where(p => p.ID == AgentTypeID);
+
+                return Ch.ToList().First().Title;
+            }
+            set
+            {
+
+            }
+        }
         public string Title { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
@@ -52,6 +65,21 @@ namespace Baybakov_Glazki
             {
                 
             } 
+        }
+        public int Discount
+        {
+            get
+            {
+                int discount = 0;
+
+                if (Sales >= 0 && Sales < 10000) discount = 0;
+                if (Sales >= 10000 && Sales < 50000) discount = 5;
+                if (Sales >= 50000 && Sales < 150000) discount = 10;
+                if (Sales >= 150000 && Sales < 500000) discount = 20;
+                if (Sales >= 500000) discount = 25;
+
+                return discount;
+            }
         }
 
         public virtual AgentType AgentType { get; set; }

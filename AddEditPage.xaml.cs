@@ -83,7 +83,7 @@ namespace Baybakov_Glazki
 
             if (string.IsNullOrWhiteSpace(currentAgent.Email))
                 errors.AppendLine("Укажите почту агента");
-            else if (!currentAgent.Email.Contains("@") && !currentAgent.Email.Contains("."))
+            else if (!currentAgent.Email.Contains("@") || !currentAgent.Email.Contains("."))
             {
                 errors.AppendLine("Правильно укажите почту агента");
             }

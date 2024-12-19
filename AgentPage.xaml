@@ -75,7 +75,7 @@
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
-                        <TextBlock Text="?" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="16"/>
+                        <TextBlock Text="{Binding Sales, StringFormat=Продажи за весь период: {0}}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="16"/>
                         <TextBlock Text="{Binding Phone}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="16"/>
                         <TextBlock Text="{Binding Email}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="16"/>
                         <TextBlock Text="{Binding Priority, StringFormat=Приоритетность: {0}}" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" FontSize="16"/>

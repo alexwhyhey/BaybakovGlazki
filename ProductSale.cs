@@ -11,7 +11,8 @@ namespace Baybakov_Glazki
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class ProductSale
     {
         public int ID { get; set; }
@@ -19,6 +20,23 @@ namespace Baybakov_Glazki
         public int ProductID { get; set; }
         public System.DateTime SaleDate { get; set; }
         public int ProductCount { get; set; }
+        public decimal Cost {
+            get
+            {
+                decimal all = 0;
+                var Sale = BaybakovGlazkiSaveEntities.GetContext().Product.Where(p => p.ID == ProductID);
+
+                foreach (Product item in Sale) {
+                    all += item.MinCostForAgent * ProductCount;
+                }
+
+                return all;
+            }
+            set
+            {
+
+            } 
+        }
     
         public virtual Agent Agent { get; set; }
         public virtual Product Product { get; set; }

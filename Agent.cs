@@ -11,7 +11,8 @@ namespace Baybakov_Glazki
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class Agent
     {
         public Agent()
@@ -32,7 +33,27 @@ namespace Baybakov_Glazki
         public string DirectorName { get; set; }
         public string INN { get; set; }
         public string KPP { get; set; }
-    
+        public decimal Sales {
+            get
+            {
+                decimal agentSales = 0;
+
+                var sales = BaybakovGlazkiSaveEntities.GetContext().ProductSale.Where(p => p.AgentID == ID);
+
+                foreach (ProductSale sale in sales)
+                {
+                    agentSales += sale.Cost;
+                }
+
+                return agentSales;
+            }
+
+            set
+            {
+                
+            } 
+        }
+
         public virtual AgentType AgentType { get; set; }
         public virtual ICollection<AgentPriorityHistory> AgentPriorityHistory { get; set; }
         public virtual ICollection<ProductSale> ProductSale { get; set; }

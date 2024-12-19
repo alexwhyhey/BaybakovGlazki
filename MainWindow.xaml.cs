@@ -43,5 +43,6 @@ namespace Baybakov_Glazki
                 BtnBack.Visibility = Visibility.Hidden;
             }
         }
+
     }
 }

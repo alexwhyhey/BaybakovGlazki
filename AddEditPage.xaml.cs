@@ -28,7 +28,14 @@ namespace Baybakov_Glazki
             InitializeComponent();
 
             if (SelectedService != null)
+            {
                 currentAgent = SelectedService;
+                DelBtn.Visibility = Visibility.Visible;
+                ComboType.SelectedIndex = currentAgent.AgentTypeID - 1;
+            } else
+            {
+                DelBtn.Visibility = Visibility.Hidden;
+            }
 
             DataContext = currentAgent;
         }
@@ -73,6 +80,7 @@ namespace Baybakov_Glazki
                 return;
             }
 
+            currentAgent.AgentTypeID = ComboType.SelectedIndex - 1;
             if (currentAgent.ID == 0)
                 BaybakovGlazkiSaveEntities.GetContext().Agent.Add(currentAgent);
 
@@ -119,16 +127,20 @@ namespace Baybakov_Glazki
 
                         BaybakovGlazkiSaveEntities.GetContext().SaveChanges();
 
-                        //AgentListView.ItemsSource = BaybakovGlazkiSaveEntities.GetContext().Agent.ToList();
-
                         //UpdateAgent();
+
+                        Manager.MainFrame.GoBack();
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message.ToString());
                     }
+                    AgentListView.ItemsSource = BaybakovGlazkiSaveEntities.GetContext().Agent.ToList();
+
                 }
+                AgentListView.ItemsSource = BaybakovGlazkiSaveEntities.GetContext().Agent.ToList();
             }
+            AgentListView.ItemsSource = BaybakovGlazkiSaveEntities.GetContext().Agent.ToList();
         }
 
         private void ChangePictureBtn_Click(object sender, RoutedEventArgs e)

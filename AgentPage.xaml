@@ -60,7 +60,7 @@
                                 <Binding Path="Logo">
                                     <Binding.TargetNullValue>
                                         <ImageSource>
-                                            ./Resources/picture.png
+                                            Resources/picture.png
                                         </ImageSource>
                                     </Binding.TargetNullValue>
                                 </Binding>
@@ -88,7 +88,8 @@
 
 
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+        <Button Name="AddBtn" Content="Добавить агента" HorizontalAlignment="Left" Click="AddBtn_Click" Grid.Row="2" Height="25" FontSize="15" Width="150"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
             <TextBlock Name="TBCount" FontSize="20" Height="25"/>
             <TextBlock Name="TBAllRecords" FontSize="20" Height="25"/>
 

@@ -208,5 +208,10 @@ namespace Baybakov_Glazki
         {
             Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Agent));
         }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage(null));
+        }
     }
 }

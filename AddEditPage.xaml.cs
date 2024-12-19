@@ -58,21 +58,35 @@ namespace Baybakov_Glazki
                 errors.AppendLine("Укажите положительный приоритет агента");
             if (string.IsNullOrWhiteSpace(currentAgent.INN))
                 errors.AppendLine("Укажите ИНН агента");
+            else if (Convert.ToInt32(currentAgent.INN.Count()) != 9)
+            {
+                errors.AppendLine("ИНН должен быть 9-значным");
+            }
             if (string.IsNullOrWhiteSpace(currentAgent.KPP))
                 errors.AppendLine("Укажите КПП агента");
+            else if (Convert.ToInt64(currentAgent.KPP.Count()) != 9)
+            {
+                errors.AppendLine("КПП должен быть 9-значным");
+            }
             if (string.IsNullOrWhiteSpace(currentAgent.Phone))
                 errors.AppendLine("Укажите телефон агента");
             else
             {
-                string ph = currentAgent.Phone.Replace("(", "").Replace("-", "").Replace("+", "");
+                string ph = currentAgent.Phone.Replace("(", "").Replace("-", "").Replace("+", "").Replace(" ", "").Replace(")", "");
 
                 if (((ph[1] == '9' || ph[1] == '4' || ph[1] == '8') && ph.Length != 11) ||
-                     (ph[1] == '3' && ph.Length != 12))
-                    errors.AppendLine("Укажите правильно телефон агента");
+                     (ph[1] == '3' && ph.Length != 12) ||
+                     ph.Length > 12 ||
+                     ph[0] != '7')
+                     errors.AppendLine("Укажите правильно телефон агента");
             }
 
             if (string.IsNullOrWhiteSpace(currentAgent.Email))
                 errors.AppendLine("Укажите почту агента");
+            else if (!currentAgent.Email.Contains("@") && !currentAgent.Email.Contains("."))
+            {
+                errors.AppendLine("Правильно укажите почту агента");
+            }
 
             if (errors.Length > 0)
             {
@@ -80,7 +94,7 @@ namespace Baybakov_Glazki
                 return;
             }
 
-            currentAgent.AgentTypeID = ComboType.SelectedIndex - 1;
+            currentAgent.AgentTypeID = ComboType.SelectedIndex + 1;
             if (currentAgent.ID == 0)
                 BaybakovGlazkiSaveEntities.GetContext().Agent.Add(currentAgent);
 
@@ -89,7 +103,8 @@ namespace Baybakov_Glazki
                 BaybakovGlazkiSaveEntities.GetContext().SaveChanges();
                 MessageBox.Show("Информация сохранена");
 
-                Manager.MainFrame.GoBack();
+                Manager.MainFrame.Navigate(new AgentPage());
+
             }
             catch (Exception ex)
             {
@@ -129,18 +144,15 @@ namespace Baybakov_Glazki
 
                         //UpdateAgent();
 
-                        Manager.MainFrame.GoBack();
+                        Manager.MainFrame.Navigate(new AgentPage());
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message.ToString());
                     }
-                    AgentListView.ItemsSource = BaybakovGlazkiSaveEntities.GetContext().Agent.ToList();
 
                 }
-                AgentListView.ItemsSource = BaybakovGlazkiSaveEntities.GetContext().Agent.ToList();
             }
-            AgentListView.ItemsSource = BaybakovGlazkiSaveEntities.GetContext().Agent.ToList();
         }
 
         private void ChangePictureBtn_Click(object sender, RoutedEventArgs e)

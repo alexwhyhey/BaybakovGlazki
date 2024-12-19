@@ -171,7 +171,7 @@ namespace Baybakov_Glazki
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AddEditPage());
+            //Manager.MainFrame.Navigate(new AddEditPage());
         }
 
         private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -206,7 +206,7 @@ namespace Baybakov_Glazki
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Agent));
         }
     }
 }

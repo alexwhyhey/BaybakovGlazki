@@ -78,7 +78,7 @@ namespace Baybakov_Glazki
 
             try
             {
-                BaybakovGlazkiSaveEntities.GetContext().Agent.SaveChanges();
+                BaybakovGlazkiSaveEntities.GetContext().SaveChanges();
                 MessageBox.Show("Информация сохранена");
 
                 Manager.MainFrame.GoBack();
@@ -92,7 +92,43 @@ namespace Baybakov_Glazki
 
         private void DelBtn_Click(object sender, RoutedEventArgs e)
         {
+            var currentProductSale = BaybakovGlazkiSaveEntities.GetContext().ProductSale.ToList();
+            var currentPriorityHistory = BaybakovGlazkiSaveEntities.GetContext().AgentPriorityHistory.ToList();
 
+            currentProductSale = currentProductSale.Where(p => p.AgentID == currentAgent.ID).ToList();
+            currentPriorityHistory = currentPriorityHistory.Where(p => p.AgentID == currentAgent.ID).ToList();
+
+            if (currentProductSale.Count != 0)
+            {
+                MessageBox.Show("Невозможно удалить, существуют продажи агента");
+            }
+            else
+            {
+                if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        BaybakovGlazkiSaveEntities.GetContext().Agent.Remove(currentAgent);
+
+                        foreach (var item in currentPriorityHistory)
+                        {
+
+                            BaybakovGlazkiSaveEntities.GetContext().AgentPriorityHistory.Remove(item);
+                        }
+
+                        BaybakovGlazkiSaveEntities.GetContext().SaveChanges();
+
+                        //AgentListView.ItemsSource = BaybakovGlazkiSaveEntities.GetContext().Agent.ToList();
+
+                        //UpdateAgent();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                }
+            }
         }
 
         private void ChangePictureBtn_Click(object sender, RoutedEventArgs e)

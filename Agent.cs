@@ -37,5 +37,22 @@ namespace Baybakov_Glazki
         public virtual ICollection<AgentPriorityHistory> AgentPriorityHistory { get; set; }
         public virtual ICollection<ProductSale> ProductSale { get; set; }
         public virtual ICollection<Shop> Shop { get; set; }
+
+         
+
+        public decimal Prod
+        {
+            get
+            {
+                decimal p = 0;
+
+                foreach (ProductSale sales in ProductSale)
+                {
+                    p += sales.Stoimost;
+                }
+
+                return p;
+            }
+        }
     }
 }

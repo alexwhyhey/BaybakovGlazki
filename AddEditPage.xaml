@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Baybakov_Glazki"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1000" d:DesignWidth="1450"
       Title="AddEditPage">
 
     <Grid>
@@ -20,7 +20,8 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
 
@@ -78,21 +79,48 @@
             <TextBox Text="{Binding Email}" FontSize ="15" Height="20" Width="200"/>
         </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.Row="3" Grid.RowSpan="4" Orientation="Vertical">
-            <TextBlock Text="Логотип" FontSize="15" Height="20" Width="auto" Margin="5"/>
+        <StackPanel Grid.Column="0" Grid.Row="3" Grid.RowSpan="4" Orientation="Vertical" HorizontalAlignment="Center">
+            <TextBlock Text="Логотип" FontSize="20" Height="20" Width="auto" Margin="30" HorizontalAlignment="Center"/>
 
-            <Image Name="LogoImage" Stretch="UniformToFill" MinHeight="50" Height="100" Width="100" HorizontalAlignment="Center" Margin="5">
+            <Image Name="LogoImage" Stretch="UniformToFill" Height="140" Width="140" HorizontalAlignment="Center" Margin="5">
                 <Image.Source>
                     <Binding Path="Logo" TargetNullValue="Resources/picture.png"></Binding>
                 </Image.Source>
             </Image>
 
-            <Button Content="Изменить" Name="ChangePictureBtn" Click="ChangePictureBtn_Click"/>
+            <Button Content="Изменить" Name="ChangePictureBtn" Click="ChangePictureBtn_Click" Margin="15" HorizontalAlignment="Center"/>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
+        <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Сохранить" Name="SaveBtn" Click="SaveBtn_Click" Margin="5"/>
             <Button Content="Удалить" Name="DelBtn" Click="DelBtn_Click" Opacity="{Binding ID}" Margin="5"/>
         </StackPanel>
+        
+        <StackPanel Grid.Row="0" Grid.Column="2">
+            <TextBlock Text="Реализация" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="5" FontSize="16"></TextBlock>
+            <ComboBox Name="Realze" DisplayMemberPath="DataName" SelectedValuePath="AgentID" Grid.Row="0" Grid.Column="2" Width="300" Height="30"></ComboBox>
+        </StackPanel>
+        
+        <StackPanel Grid.Column="2" Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Name="add" Click="add_Click" Content="Добавить"/>
+            <Button Name="delete" Click="delete_Click" Content="Удалить"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="2">
+            <TextBlock Text="Поиск" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="5" FontSize="16"></TextBlock>
+            <TextBox Name="searchprod" TextChanged="searchprod_TextChanged"  Grid.Row="3" Grid.Column="2" Width="300" Height="30"></TextBox>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock Text="Продукт" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" FontSize="16"/>
+            <ComboBox Name="Products" DisplayMemberPath="Title" SelectedValuePath="ID" Grid.Row="2" Grid.Column="2" Width="300" Height="30"></ComboBox>
+        </StackPanel>
+        
+        <StackPanel Grid.Column="3" Grid.Row="3">
+            <TextBlock Text="Количество и дата продажи" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="5" FontSize="14"></TextBlock>
+            <TextBox Name="ProductCountTB" Grid.Column="2" Grid.Row="5" Width="300" Height="30" Margin="5"></TextBox>
+
+        </StackPanel>
+        <DatePicker Name="saleData" Grid.Column="2" Grid.Row="4" Width="300" Height="30"></DatePicker>
     </Grid>
 </Page>

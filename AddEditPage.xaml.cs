@@ -22,6 +22,8 @@ namespace Baybakov_Glazki
     public partial class AddEditPage : Page
     {
         private Agent currentAgent = new Agent();
+        private CollectionViewSource _productsView;
+        private CollectionViewSource _sales;
 
         public AddEditPage(Agent SelectedService)
         {
@@ -38,6 +40,23 @@ namespace Baybakov_Glazki
             }
 
             DataContext = currentAgent;
+            DataContext = _productsView;
+
+            _sales = new CollectionViewSource();
+            var saless = BaybakovGlazkiSaveEntities.GetContext().ProductSale.Where(p => p.AgentID == currentAgent.ID).ToList();
+
+            _sales.Source = saless;
+            Realze.ItemsSource = _sales.View;
+            Realze.DisplayMemberPath = "DataName";
+            Realze.SelectedValuePath = "AgentID";
+
+            _productsView = new CollectionViewSource();
+            var products = BaybakovGlazkiSaveEntities.GetContext().Product.ToList();
+
+            _productsView.Source = products;
+            Products.ItemsSource = _productsView.View;
+            Products.DisplayMemberPath = "Title";
+            Products.SelectedValuePath = "ID";
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
@@ -165,6 +184,95 @@ namespace Baybakov_Glazki
 
                 LogoImage.Source = new BitmapImage(new Uri(ofd.FileName));
             }
+        }
+
+        private void add_Click(object sender, RoutedEventArgs e)
+        {
+            StringBuilder errors = new StringBuilder();
+            
+            if (Products.SelectedItem == null)
+                errors.AppendLine("Укажите продукт");
+            if (string.IsNullOrWhiteSpace(ProductCountTB.Text))
+                errors.AppendLine("Укажите количество продуктов");
+            
+            bool isProductCountDigits = true;
+
+            for (int i = 0; i < ProductCountTB.Text.Length; i++)
+            {
+                if (ProductCountTB.Text[i] < '0' || ProductCountTB.Text[i] > '9')
+                {
+                    isProductCountDigits = false;
+                }
+            }
+            if (!isProductCountDigits)
+                errors.AppendLine("Укажите численное положительное продуктов");
+            if (ProductCountTB.Text == "0")
+            {
+                errors.AppendLine("Укажите количество продаж");
+            }
+            if (string.IsNullOrWhiteSpace(saleData.Text))
+                errors.AppendLine("Укажите дату продажи");
+            if (errors.Length > 0)
+            {
+                MessageBox.Show(errors.ToString()); return;
+            }
+
+            var _currentProductSale = new ProductSale();
+
+            _currentProductSale.AgentID = currentAgent.ID;
+            _currentProductSale.ProductID = Products.SelectedIndex + 1; _currentProductSale.ProductCount = Convert.ToInt32(ProductCountTB.Text);
+            _currentProductSale.SaleDate = Convert.ToDateTime(saleData.Text);
+
+            if (_currentProductSale.ID == 0)
+                BaybakovGlazkiSaveEntities.GetContext().ProductSale.Add(_currentProductSale);
+
+            try
+            {
+                BaybakovGlazkiSaveEntities.GetContext().SaveChanges();
+
+                MessageBox.Show("информация сохранена");
+                Manager.MainFrame.GoBack();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+        }
+        private void delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    if (Realze.SelectedItem != null)
+                    {
+                        ProductSale selectedHistory = (ProductSale)Realze.SelectedItem;
+                        BaybakovGlazkiSaveEntities.GetContext().ProductSale.Remove(selectedHistory);
+                        BaybakovGlazkiSaveEntities.GetContext().SaveChanges();
+
+                        MessageBox.Show("Информация удалена!");
+                        Manager.MainFrame.GoBack();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Пожалуйста, выберите запись для удаления.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
+        }
+        private void searchprod_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = searchprod.Text.ToLower();
+
+            _productsView.View.Filter = o =>
+            {
+                Product p = o as Product;
+                return p != null && p.Title.ToLower().Contains(searchText);
+            };
         }
     }
 }

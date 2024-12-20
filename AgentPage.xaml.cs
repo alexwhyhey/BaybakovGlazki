@@ -160,7 +160,7 @@ namespace Baybakov_Glazki
             if (!string.IsNullOrWhiteSpace(TBoxSearch.Text)) {
                 currentAgents = currentAgents.Where(p => p.Title.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList().
                     Union(currentAgents.Where(p => p.Email.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList()).ToList().
-                    Union(currentAgents.Where(p => p.Phone.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList()).ToList();
+                    Union(currentAgents.Where(p => p.Phone.ToLower().Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").Contains(TBoxSearch.Text.ToLower())).ToList()).ToList();
             }
 
             AgentListView.ItemsSource = currentAgents;
@@ -227,7 +227,52 @@ namespace Baybakov_Glazki
 
         private void ChangePriorityBtn_Click(object sender, RoutedEventArgs e)
         {
-             
+            int maxPr = 0;
+
+            foreach (Agent agent in AgentListView.SelectedItems)
+            {
+                if (agent.Priority > maxPr)
+                {
+                    maxPr = agent.Priority;
+                }
+            }
+
+            ChangePri myWin = new ChangePri(maxPr);
+            myWin.ShowDialog();
+
+            int maxPrTB = Convert.ToInt32(myWin.maxPrTB.Text);
+
+            if (string.IsNullOrEmpty(myWin.maxPrTB.Text) || maxPrTB < 0)
+            {
+                MessageBox.Show("Изменений не произошло");
+            }
+            else
+            {
+                int newPr = Convert.ToInt32(myWin.maxPrTB.Text);
+
+                foreach (Agent agent in AgentListView.SelectedItems)
+                {
+                    agent.Priority = newPr;
+                }
+
+                var history = BaybakovGlazkiSaveEntities.GetContext().AgentPriorityHistory;
+
+                try
+                {
+                    BaybakovGlazkiSaveEntities.GetContext().SaveChanges();
+                } catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+
+            }
+
+            UpdateAgent();
+        }
+
+        private void HistoryBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

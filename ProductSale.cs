@@ -12,7 +12,7 @@ namespace Baybakov_Glazki
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    
     public partial class ProductSale
     {
         public int ID { get; set; }
@@ -36,6 +36,19 @@ namespace Baybakov_Glazki
             {
 
             } 
+        }
+
+        public string DataName
+        {
+            get
+            {
+                string product = Product.Title;
+                string data = Convert.ToString(SaleDate);
+                string count = Convert.ToString(ProductCount);
+                string dc = product + " " + data + " " + count;
+
+                return dc;
+            }
         }
     
         public virtual Agent Agent { get; set; }

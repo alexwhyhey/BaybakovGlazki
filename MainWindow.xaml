@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Baybakov_Glazki"
         mc:Ignorable="d"
-        Title="Baybakov" Height="450" Width="800" FontFamily="Century Gothic" Icon="Resources/GlazkiSave.png">
+        Title="Baybakov" Height="1000" Width="1450" FontFamily="Century Gothic" Icon="Resources/GlazkiSave.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>

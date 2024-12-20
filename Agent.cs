@@ -11,7 +11,9 @@ namespace Baybakov_Glazki
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Linq;
+    using System.Windows.Media;
 
     public partial class Agent
     {
@@ -82,6 +84,19 @@ namespace Baybakov_Glazki
             }
         }
 
+        public SolidColorBrush FontStyle
+        {
+            get
+            {
+                if (Discount >= 25)
+                    return (SolidColorBrush)new BrushConverter().ConvertFromString("LightGreen");
+                else
+                {
+                    return (SolidColorBrush)new BrushConverter().ConvertFromString("White");
+                }
+            }
+        }
+    
         public virtual AgentType AgentType { get; set; }
         public virtual ICollection<AgentPriorityHistory> AgentPriorityHistory { get; set; }
         public virtual ICollection<ProductSale> ProductSale { get; set; }
